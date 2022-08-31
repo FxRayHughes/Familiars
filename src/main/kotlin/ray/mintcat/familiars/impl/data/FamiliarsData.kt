@@ -39,12 +39,17 @@ class FamiliarsData(
     var lastLocation: Location = entity.getLocation().block.location
 
     fun update() {
-        if (player == null) {
+        if (player == null || !player!!.isOnline) {
+            delete()
             return
         }
         val pos = player!!.location.clone()
             .add(player!!.location.clone().direction.normalize().setY(0).multiply(deviationZ))
             .add(player!!.location.clone().apply { yaw += 90 }.direction.normalize().setY(0).multiply(deviationX))
+        if (player!!.world != entity.getWorld()) {
+            delete()
+            return
+        }
         if (player!!.location.distance(entity.getLocation()) >= 10) {
             entity.teleport(pos)
             return

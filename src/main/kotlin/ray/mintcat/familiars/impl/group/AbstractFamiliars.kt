@@ -13,10 +13,11 @@ interface AbstractFamiliars {
     fun create(livingEntity: LivingEntity): FamiliarsData?
 
     fun run(livingEntity: LivingEntity) {
-        if (get(livingEntity) == null) {
+        val getter = if (get(livingEntity) == null) {
             register(livingEntity)
-        }
-        val getter = get(livingEntity) ?: return
+        } else {
+            get(livingEntity)
+        } ?: return
         if (livingEntity is Player && !livingEntity.isOnline) {
             getter.delete()
         }
@@ -31,12 +32,14 @@ interface AbstractFamiliars {
         return Familiars.getData(livingEntity.uniqueId, id)
     }
 
-    fun build(livingEntity: LivingEntity): EntityInstance
+    fun build(livingEntity: LivingEntity): EntityInstance?
 
-    fun register(livingEntity: LivingEntity) {
+    fun register(livingEntity: LivingEntity): FamiliarsData? {
         val creates = create(livingEntity)
         if (creates != null) {
             Familiars.data["${livingEntity.uniqueId}::${id}"] = creates
+            return creates
         }
+        return null
     }
 }

@@ -21,5 +21,10 @@ object Familiars : Plugin() {
         return data["${uuid}::${id}"]
     }
 
+    override fun onDisable() {
+        data.values.forEach {
+            it.delete()
+        }
+    }
 
 }
