@@ -1,6 +1,6 @@
 package ray.mintcat.familiars.impl.group
 
-import ink.ptms.adyeshach.common.entity.EntityInstance
+import ink.ptms.adyeshach.core.entity.EntityInstance
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import ray.mintcat.familiars.Familiars
